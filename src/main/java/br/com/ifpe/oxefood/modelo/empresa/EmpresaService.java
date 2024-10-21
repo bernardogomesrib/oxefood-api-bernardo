@@ -1,7 +1,5 @@
 package br.com.ifpe.oxefood.modelo.empresa;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ public class EmpresaService {
     public Empresa salvar(Empresa empresa) {
         empresa.setHabilitado(true);
         empresa.setVersao(1L);
-        empresa.setDataCriacao(LocalDate.now());
+        //empresa.setDataCriacao(LocalDate.now());
         return EmpresaRepository.save(empresa);
     }
 }

@@ -1,7 +1,5 @@
 package br.com.ifpe.oxefood.modelo.produto;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ public class ProdutoService {
     public Produto salvar(Produto produto) {
         produto.setHabilitado(true);
         produto.setVersao(1L);
-        produto.setDataCriacao(LocalDate.now());
+        //produto.setDataCriacao(LocalDate.now());
         return produtoRepository.save(produto);
          
     }
