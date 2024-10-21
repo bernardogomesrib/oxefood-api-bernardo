@@ -1,6 +1,6 @@
 package br.com.ifpe.oxefood.util.entity;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -28,12 +28,12 @@ public abstract class EntidadeAuditavel extends EntidadeNegocio {
    @JsonIgnore
    @CreatedDate
    @Column(nullable = false, updatable = false)
-   private LocalDate dataCriacao;
+   private LocalDateTime dataCriacao;
 
    @JsonIgnore
    @LastModifiedDate
    @Column(insertable = false)
-   private LocalDate dataUltimaModificacao;
+   private LocalDateTime dataUltimaModificacao;
 
    @JsonIgnore
    @Column
