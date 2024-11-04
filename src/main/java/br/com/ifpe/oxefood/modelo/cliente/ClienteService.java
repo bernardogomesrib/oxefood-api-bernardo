@@ -24,4 +24,18 @@ public class ClienteService {
     public Cliente obterPorID(Long id){
         return clienteRepository.findById(id).orElseThrow();
     }
+    @Transactional
+    public void update(Long id, Cliente clienteAlterado) {
+ 
+       Cliente cliente = clienteRepository.findById(id).get();
+       cliente.setNome(clienteAlterado.getNome());
+       cliente.setDataNascimento(clienteAlterado.getDataNascimento());
+       cliente.setCpf(clienteAlterado.getCpf());
+       cliente.setFoneCelular(clienteAlterado.getFoneCelular());
+       cliente.setFoneFixo(clienteAlterado.getFoneFixo());
+
+       cliente.setVersao(cliente.getVersao() + 1);
+       clienteRepository.save(cliente);
+   }
+ 
 }
