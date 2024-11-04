@@ -1,5 +1,7 @@
 package br.com.ifpe.oxefood.modelo.produto;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,5 +18,11 @@ public class ProdutoService {
         //produto.setDataCriacao(LocalDate.now());
         return produtoRepository.save(produto);
          
+    }
+    public List<Produto> listarTodos(){
+        return produtoRepository.findAll();
+    }
+    public Produto obterPorID(Long id){
+        return produtoRepository.findById(id).orElseThrow();
     }
 }

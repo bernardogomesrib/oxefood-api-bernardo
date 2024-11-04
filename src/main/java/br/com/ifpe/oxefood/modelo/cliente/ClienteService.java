@@ -1,5 +1,7 @@
 package br.com.ifpe.oxefood.modelo.cliente;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +17,11 @@ public class ClienteService {
         cliente.setVersao(1L);
         //cliente.setDataCriacao(LocalDate.now());
         return clienteRepository.save(cliente);
+    }
+    public List<Cliente> listarTodos(){
+        return clienteRepository.findAll();
+    }
+    public Cliente obterPorID(Long id){
+        return clienteRepository.findById(id).orElseThrow();
     }
 }
