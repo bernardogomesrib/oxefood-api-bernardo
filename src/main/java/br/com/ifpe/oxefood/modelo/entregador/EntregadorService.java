@@ -46,5 +46,11 @@ public class EntregadorService {
        Entregador.setAtivo(EntregadorAlterado.getAtivo());
        return EntregadorRepository.save(Entregador);
    }
+    @Transactional
+    public void delete(Long id) {
+        Entregador Entregador = EntregadorRepository.findById(id).get();
+        Entregador.setHabilitado(false);
+        EntregadorRepository.save(Entregador);
+    }
 }
 
