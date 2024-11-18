@@ -32,7 +32,7 @@ public class ProdutoService {
     @Transactional
     public Produto update(Long id, Produto ProdutoAlterado) {
         Produto Produto = produtoRepository.findById(id).get();
-        Produto.setEmpresa(ProdutoAlterado.getEmpresa());
+        /* Produto.setEmpresa(ProdutoAlterado.getEmpresa()); */
         Produto.setCategoria(ProdutoAlterado.getCategoria());
         Produto.setCodigo(ProdutoAlterado.getCodigo());
         Produto.setTitulo(ProdutoAlterado.getTitulo());

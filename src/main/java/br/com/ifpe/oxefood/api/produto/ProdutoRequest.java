@@ -1,6 +1,6 @@
 package br.com.ifpe.oxefood.api.produto;
 
-import br.com.ifpe.oxefood.modelo.empresa.Empresa;
+/* import br.com.ifpe.oxefood.modelo.empresa.Empresa; */
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProdutoRequest {
 
-    private Empresa empresa;
+    /* private Empresa empresa; */
     private String categoria;
     private String codigo;
     private String titulo;
@@ -25,7 +25,7 @@ public class ProdutoRequest {
    public Produto build() {
 
        return Produto.builder()
-       .empresa(empresa)
+       /* .empresa(empresa) */
        .categoria(categoria)
        .codigo(codigo)
        .titulo(titulo)

@@ -32,7 +32,7 @@ public class EntregadorService {
        Entregador.setCpf(EntregadorAlterado.getCpf());
        Entregador.setFoneCelular(EntregadorAlterado.getFoneCelular());
        Entregador.setFoneFixo(EntregadorAlterado.getFoneFixo());
-       Entregador.setEmpresa(EntregadorAlterado.getEmpresa());
+       /* Entregador.setEmpresa(EntregadorAlterado.getEmpresa()); */
        Entregador.setRg(EntregadorAlterado.getRg());
        Entregador.setQtdEntregasRealizadas(EntregadorAlterado.getQtdEntregasRealizadas());
        Entregador.setValorFrete(EntregadorAlterado.getValorFrete());

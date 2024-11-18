@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import br.com.ifpe.oxefood.modelo.empresa.Empresa;
+/* import br.com.ifpe.oxefood.modelo.empresa.Empresa; */
 import br.com.ifpe.oxefood.modelo.entregador.Entregador;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EntregadorRequest {
 
-    private Empresa empresa;
+    /* private Empresa empresa; */
 
     private String nome;
     private String cpf;
@@ -40,7 +40,7 @@ public class EntregadorRequest {
     public Entregador build() {
 
         return Entregador.builder()
-                .empresa(empresa)
+                /* .empresa(empresa) */
                 .nome(nome)
                 .cpf(cpf)
                 .rg(rg)
