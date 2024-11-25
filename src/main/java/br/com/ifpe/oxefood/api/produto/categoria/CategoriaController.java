@@ -36,6 +36,7 @@ public class CategoriaController {
     @PostMapping()
     @Transactional
     public CategoriaProduto post(@RequestBody CategoriaProduto entity) {
+        entity.setHabilitado(true);
         return categoriaProdutoRepository.save(entity);
     }
 

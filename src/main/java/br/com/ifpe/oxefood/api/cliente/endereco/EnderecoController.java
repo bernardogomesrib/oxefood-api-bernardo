@@ -26,7 +26,7 @@ public class EnderecoController {
     @Autowired
     ClienteService clienteService;
 
-    @PostMapping("/endereco/{clienteId}")
+    @PostMapping("{clienteId}")
     public ResponseEntity<Endereco> adicionarEndereco(@PathVariable("clienteId") Long clienteId,
             @RequestBody @Valid EnderecoRequest request) {
 
@@ -34,7 +34,7 @@ public class EnderecoController {
         return new ResponseEntity<Endereco>(endereco, HttpStatus.CREATED);
     }
 
-    @PutMapping("/endereco/{enderecoId}")
+    @PutMapping("{enderecoId}")
     public ResponseEntity<Endereco> atualizarEndereco(@PathVariable("enderecoId") Long enderecoId,
             @RequestBody EnderecoRequest request) {
 
@@ -42,7 +42,7 @@ public class EnderecoController {
         return new ResponseEntity<Endereco>(endereco, HttpStatus.OK);
     }
 
-    @DeleteMapping("/endereco/{enderecoId}")
+    @DeleteMapping("{enderecoId}")
     public ResponseEntity<Void> removerEndereco(@PathVariable("enderecoId") Long enderecoId) {
 
         clienteService.removerEndereco(enderecoId);

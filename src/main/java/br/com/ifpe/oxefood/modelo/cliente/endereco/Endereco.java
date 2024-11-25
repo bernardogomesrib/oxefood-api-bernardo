@@ -1,5 +1,7 @@
 package br.com.ifpe.oxefood.modelo.cliente.endereco;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
@@ -19,6 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Endereco extends EntidadeAuditavel {
     @ManyToOne
+    @JsonIgnore
     private Cliente cliente;
     @Column
     private String rua;
