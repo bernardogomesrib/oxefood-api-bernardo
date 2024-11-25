@@ -29,7 +29,7 @@ public class ProdutoController {
    @PostMapping
    public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
 
-       Produto Produto = ProdutoService.salvar(request.build());
+       Produto Produto = ProdutoService.salvar(request.build(),request.getCategoriaId());
        return new ResponseEntity<Produto>(Produto, HttpStatus.CREATED);
    }
    @GetMapping

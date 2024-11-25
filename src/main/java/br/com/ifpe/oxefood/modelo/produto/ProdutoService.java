@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.produto.categoria.CategoriaProdutoRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -12,11 +13,12 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    @Autowired
+    private CategoriaProdutoRepository categoriaProdutoRepository;
     @Transactional
-    public Produto salvar(Produto produto) {
+    public Produto salvar(Produto produto,Long id) {
         produto.setHabilitado(true);
-        produto.setVersao(1L);
-        // produto.setDataCriacao(LocalDate.now());
+        produto.setCategoria(categoriaProdutoRepository.findById(id).get());
         return produtoRepository.save(produto);
 
     }
