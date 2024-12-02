@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood.modelo.produto.categoria.CategoriaProdutoRepository;
+import br.com.ifpe.oxefood.util.exception.ProdutoException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -17,6 +18,9 @@ public class ProdutoService {
     private CategoriaProdutoRepository categoriaProdutoRepository;
     @Transactional
     public Produto salvar(Produto produto,Long id) {
+        if(produto.getValorUnitario() < 100) {
+            throw new ProdutoException(ProdutoException.MSG_VALOR_MINIMO);
+        }
         produto.setHabilitado(true);
         produto.setCategoria(categoriaProdutoRepository.findById(id).get());
         return produtoRepository.save(produto);

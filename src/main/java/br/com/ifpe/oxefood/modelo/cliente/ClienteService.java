@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.ifpe.oxefood.modelo.cliente.endereco.Endereco;
 import br.com.ifpe.oxefood.modelo.cliente.endereco.EnderecoRepository;
+import br.com.ifpe.oxefood.util.exception.ClienteException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -18,8 +19,12 @@ public class ClienteService {
     private EnderecoRepository enderecoRepository;
     @Transactional
     public Cliente salvar(Cliente cliente) {
+        if(!cliente.getFoneCelular().startsWith("(81)")||!cliente.getFoneCelular().startsWith("81")) {
+            throw new ClienteException(ClienteException.MSG_DDD_INVALIDO,cliente.getFoneCelular());
+        }
         cliente.setHabilitado(true);
         cliente.setVersao(1L);
+
         //cliente.setDataCriacao(LocalDate.now());
         return clienteRepository.save(cliente);
     }
@@ -91,9 +96,7 @@ public class ClienteService {
    public void removerEndereco(Long idEndereco) {
 
        Endereco endereco = enderecoRepository.findById(idEndereco).get();
-       endereco.setHabilitado(Boolean.FALSE);
-       enderecoRepository.save(endereco);
-
+       enderecoRepository.delete(endereco);
        Cliente cliente = this.obterPorID(endereco.getCliente().getId());
        cliente.getEnderecos().remove(endereco);
        clienteRepository.save(cliente);

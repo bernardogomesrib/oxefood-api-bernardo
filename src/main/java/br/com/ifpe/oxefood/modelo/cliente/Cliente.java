@@ -29,16 +29,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
-   @Column
+
+   @Column(nullable = false,length = 100)
    private String nome;
-   @Column
+   @Column(nullable = false)
    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
    private LocalDate dataNascimento;
-   @Column
+   @Column(nullable = false, length = 14, unique = true)
    private String cpf;
-   @Column
+   @Column(nullable = false, length = 20)
    private String foneCelular;
-   @Column
+   @Column(length = 20)
    private String foneFixo;
    @OneToMany(mappedBy = "cliente", orphanRemoval = true, fetch = FetchType.EAGER)
    private List<Endereco> enderecos;

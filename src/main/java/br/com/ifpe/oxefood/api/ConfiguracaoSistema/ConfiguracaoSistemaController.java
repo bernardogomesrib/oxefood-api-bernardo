@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifpe.oxefood.modelo.configuracaosistema.ConfiguracaoSistema;
 import br.com.ifpe.oxefood.modelo.configuracaosistema.ConfiguracaoSistemaService;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -27,7 +28,7 @@ public class ConfiguracaoSistemaController {
     private ConfiguracaoSistemaService configuracaoSistemaService;
 
     @PostMapping
-    public ResponseEntity<ConfiguracaoSistema> save(@RequestBody ConfiguracaoSistemaRequest request) {
+    public ResponseEntity<ConfiguracaoSistema> save(@RequestBody @Valid ConfiguracaoSistemaRequest request) {
 
         ConfiguracaoSistema ConfiguracaoSistema = configuracaoSistemaService.salvar(request.build());
         return new ResponseEntity<ConfiguracaoSistema>(ConfiguracaoSistema, HttpStatus.CREATED);
@@ -44,7 +45,7 @@ public class ConfiguracaoSistemaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ConfiguracaoSistema> update(@PathVariable("id") Long id, @RequestBody ConfiguracaoSistemaRequest request) {
+    public ResponseEntity<ConfiguracaoSistema> update(@PathVariable("id") Long id, @RequestBody @Valid ConfiguracaoSistemaRequest request) {
 
         configuracaoSistemaService.update(id, request.build());
         return ResponseEntity.ok().build();

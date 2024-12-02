@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.produto.Produto;
 import br.com.ifpe.oxefood.modelo.produto.ProdutoService;
 import br.com.ifpe.oxefood.modelo.produto.categoria.CategoriaProdutoRepository;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -30,7 +31,7 @@ public class ProdutoController {
    private CategoriaProdutoRepository categoriaProdutoRepository;
 
    @PostMapping
-   public ResponseEntity<Produto> save(@RequestBody ProdutoRequest request) {
+   public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
 
        Produto Produto = ProdutoService.salvar(request.build(),request.getCategoriaId());
        return new ResponseEntity<Produto>(Produto, HttpStatus.CREATED);
@@ -45,7 +46,7 @@ public class ProdutoController {
         return ProdutoService.obterPorID(id);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
+    public ResponseEntity<Produto> update(@PathVariable("id") Long id,@Valid @RequestBody ProdutoRequest request) {
         Produto p = request.build();
         p.setCategoria(categoriaProdutoRepository.findById(request.getCategoriaId()).get());
         System.out.println(p.getCategoria().getDescricao());
