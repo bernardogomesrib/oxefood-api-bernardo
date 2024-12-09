@@ -4,12 +4,15 @@ import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /* import br.com.ifpe.oxefood.modelo.empresa.Empresa; */
 import br.com.ifpe.oxefood.modelo.entregador.Entregador;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +24,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EntregadorRequest {
 
-    /* private Empresa empresa; */
+    
     @NotBlank(message = "O nome é obrigatório")
     @Length(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres")
     private String nome;
@@ -32,15 +35,17 @@ public class EntregadorRequest {
     @Length(min = 9, max = 14, message = "O RG deve ter entre 9 e 14 caracteres")
     private String rg;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @NotBlank(message = "A data de nascimento é obrigatória")
+    @NotNull(message = "A data de nascimento é obrigatória")
+    @Past(message = "A data de nascimento deve ser no passado")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataNascimento;
     @NotBlank(message = "é necessário pelo menos um modo de comunicação")
     @Length(min = 11, max = 20, message = "O telefone celular deve ter entre {min} e {max} caracteres")
     private String foneCelular;
     private String foneFixo;
-    @NotBlank(message = "A quantidade de entregas realizadas é obrigatória")
+    @NotNull(message = "A quantidade de entregas realizadas é obrigatória")
     private Integer qtdEntregasRealizadas;
-    @NotBlank(message = "O valor do frete é obrigatório")
+    @NotNull(message = "O valor do frete é obrigatório")
     private Double valorFrete;
     @NotBlank(message = "O endereço da rua é obrigatório")
     private String enderecoRua;
@@ -55,7 +60,7 @@ public class EntregadorRequest {
     @NotBlank(message = "O estado do endereço é obrigatório")
     private String enderecoUf;
     private String complemento;
-    @NotBlank(message = "O status do entregador é obrigatório")
+    @NotNull(message = "O status do entregador é obrigatório")
     private Boolean ativo;
 
     public Entregador build() {

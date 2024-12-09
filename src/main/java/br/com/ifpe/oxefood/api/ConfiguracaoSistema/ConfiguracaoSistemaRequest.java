@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.ifpe.oxefood.modelo.configuracaosistema.ConfiguracaoSistema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,12 +36,12 @@ public class ConfiguracaoSistemaRequest {
     @NotBlank(message = "O email de contato é obrigatório")
     @Email
     private String emailContato;
-    @NotBlank(message = "O tempo mínimo de agendamento de pedidos é obrigatório")
+    @NotNull(message = "O tempo mínimo de agendamento de pedidos é obrigatório")
     private Long tempoMinimoAgendamentoPedidos;
-    @NotBlank(message = "O aceite de pedidos é obrigatório")
+    @NotNull(message = "O aceite de pedidos é obrigatório")
     private boolean ligarAceitePedidos;
     @JsonFormat(pattern = "dd/MM/yyyy")
-    @NotBlank(message = "A data de entrada no sistema é obrigatória")
+    @NotNull(message = "A data de entrada no sistema é obrigatória")
     @Past(message = "A data de entrada no sistema deve ser no passado ou Hoje")
     private LocalDate dataEntradaSistema;
 
