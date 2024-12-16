@@ -42,11 +42,11 @@ public abstract class EntidadeAuditavel extends EntidadeNegocio {
    @JsonIgnore
    @CreatedBy
    @ManyToOne
-   private Usuario criadoPor; // Id do usuário que o criou
+   private Usuario criadoPor;
 
    @JsonIgnore
    @LastModifiedBy
    @ManyToOne
-   private Usuario ultimaModificacaoPor; // Id do usuário que fez a última alteração
+   private Usuario ultimaModificacaoPor;
 
 }
