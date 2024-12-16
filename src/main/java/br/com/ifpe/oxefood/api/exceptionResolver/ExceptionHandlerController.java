@@ -12,6 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import io.jsonwebtoken.ExpiredJwtException;
+
 @RestControllerAdvice
 public class ExceptionHandlerController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -31,7 +33,19 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> tratarErro500(Exception ex) {
-        return ResponseEntity.internalServerError().body(ex.getMessage());
+    public ResponseEntity<Map<String, Object>> tratarErro500(Exception ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("cause", ex.getCause() != null ? ex.getCause().toString() : "N/A");
+        response.put("stackTrace", ex.getStackTrace());
+        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<Map<String, Object>> tratarErro401(ExpiredJwtException ex) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("claims", ex.getClaims());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 }

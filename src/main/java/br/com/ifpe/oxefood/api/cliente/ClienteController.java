@@ -15,22 +15,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.cliente.Cliente;
 import br.com.ifpe.oxefood.modelo.cliente.ClienteService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/cliente")
 @CrossOrigin
 public class ClienteController {
+    @Autowired
+    private UsuarioService usuarioService;
 
     @Autowired
     private ClienteService clienteService;
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
+    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request, HttpServletRequest requestu) {
 
         Cliente cliente = clienteService.salvar(request.build());
+        usuarioService.obterUsuarioLogado(requestu);
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
 
@@ -55,6 +60,11 @@ public class ClienteController {
         clienteService.delete(id);
         
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/filtrar")
+    public List<Cliente> filtrar(@RequestBody String nome, @RequestBody String cpf) {
+        return clienteService.filtrarPorNomeOuCpf(nome, cpf);
     }
 
 }

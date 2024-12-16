@@ -26,7 +26,7 @@ public class ClienteService {
 
     @Transactional
     public Cliente salvar(Cliente cliente) {
-
+        cliente.setHabilitado(true);
         usuarioService.save(cliente.getUsuario());
 
         for (Perfil perfil : cliente.getUsuario().getRoles()) {
@@ -120,4 +120,7 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
+    public List<Cliente> filtrarPorNomeOuCpf(String nome, String cpf){
+        return clienteRepository.findByNomeOrCpf(nome, cpf);
+    }
 }
