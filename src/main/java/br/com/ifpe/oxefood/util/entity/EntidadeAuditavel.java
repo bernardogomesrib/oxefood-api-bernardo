@@ -2,7 +2,9 @@ package br.com.ifpe.oxefood.util.entity;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -37,10 +39,12 @@ public abstract class EntidadeAuditavel extends EntidadeNegocio {
 
    @JsonIgnore
    @Column
+   @CreatedBy
    private Long criadoPor; // Id do usuário que o criou
 
    @JsonIgnore
    @Column
+   @LastModifiedBy
    private Long ultimaModificacaoPor; // Id do usuário que fez a última alteração
 
 }

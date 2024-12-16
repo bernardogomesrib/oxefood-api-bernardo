@@ -4,11 +4,14 @@ import java.time.LocalDate;
 
 import org.hibernate.annotations.SQLRestriction;
 
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +32,12 @@ public class Funcionario extends EntidadeAuditavel {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TipoFuncionario tipo;
+
+        
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
+
 
     @Column
     private String nome;

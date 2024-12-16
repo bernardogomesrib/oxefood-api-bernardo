@@ -32,25 +32,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Usuario extends EntidadeNegocio implements UserDetails {
 
-   public static final String ROLE_CLIENTE = "CLIENTE";
-   @Column(nullable = false, unique = true)
-   private String username;
+    @Column(nullable = false, unique = true)
+    private String username;
+    @JsonIgnore
+    @Column(nullable = false)
+    private String password;
 
-    
+    @JsonIgnore
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<Perfil> roles = new ArrayList<>();
 
-
-   @JsonIgnore
-   @Column(nullable = false)
-   private String password;
-
-   @JsonIgnore
-   @ElementCollection(fetch = FetchType.EAGER)
-   @Builder.Default
-   private List<String> roles = new ArrayList<>();
-
-   @Override
+    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return roles;
     }
 
     @Override

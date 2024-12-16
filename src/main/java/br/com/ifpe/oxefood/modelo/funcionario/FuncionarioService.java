@@ -5,19 +5,34 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
+import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import jakarta.transaction.Transactional;
 
 @Service
 public class FuncionarioService {
-    
+     @Autowired
+    private UsuarioService usuarioService;
+
+    @Autowired
+    private PerfilRepository perfilRepository;
     @Autowired
     private FuncionarioRepository repository;
 
     @Transactional
     public Funcionario save(Funcionario funcionario) {
+        
+       usuarioService.save(funcionario.getUsuario());
 
-        funcionario.setHabilitado(Boolean.TRUE);
-        return repository.save(funcionario);
+       for (Perfil perfil : funcionario.getUsuario().getRoles()) {
+           perfil.setHabilitado(Boolean.TRUE);
+           perfilRepository.save(perfil);
+       }
+
+       funcionario.setHabilitado(Boolean.TRUE);
+       return repository.save(funcionario);
+
     }
 
     public List<Funcionario> listarTodos() {

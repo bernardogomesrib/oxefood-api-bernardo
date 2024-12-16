@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import br.com.ifpe.oxefood.modelo.acesso.Perfil;
 import br.com.ifpe.oxefood.modelo.seguranca.JwtAuthenticationFilter;
 
 @Configuration
@@ -40,13 +41,27 @@ public class SecurityConfiguration {
                 .csrf(c -> c.disable())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST,"/api/cliente","/api/auth").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/produto/")
+                        .hasAnyAuthority(Perfil.ROLE_CLIENTE, Perfil.ROLE_FUNCIONARIO_ADMIN,
+                                Perfil.ROLE_FUNCIONARIO_USER) // Consulta de produto
+                        .requestMatchers(HttpMethod.POST, "/api/produto")
+                        .hasAnyAuthority(Perfil.ROLE_FUNCIONARIO_ADMIN, Perfil.ROLE_FUNCIONARIO_USER) // Cadastro de
+                                                                                                        // produto
+                        .requestMatchers(HttpMethod.PUT, "/api/produto/*")
+                        .hasAnyAuthority(Perfil.ROLE_FUNCIONARIO_ADMIN, Perfil.ROLE_FUNCIONARIO_USER) // Alteração de
+                                                                                                        // produto
+                        .requestMatchers(HttpMethod.DELETE, "/api/produto/*")
+                        .hasAnyAuthority(Perfil.ROLE_FUNCIONARIO_ADMIN) // Exclusão de produto
+                        
+                        .requestMatchers(HttpMethod.POST,"/api/funcionario").permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/api/cliente", "/api/auth").permitAll()
                         .requestMatchers(HttpMethod.GET,
-                         "/api-docs/*",
-                                    "/swagger-ui/*")
-                                    .permitAll()
-                        .anyRequest().authenticated()
-                )
+                                "/api-docs/*",
+                                "/swagger-ui/*")
+                        .permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
@@ -59,11 +74,12 @@ public class SecurityConfiguration {
 
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080", "http://localhost:*","localhost:*"));
+        configuration.setAllowedOrigins(
+                Arrays.asList("http://localhost:3000", "http://localhost:8080", "http://localhost:*", "localhost:*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
-    
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

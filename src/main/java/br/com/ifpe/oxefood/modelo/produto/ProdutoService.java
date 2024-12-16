@@ -18,7 +18,7 @@ public class ProdutoService {
     private CategoriaProdutoRepository categoriaProdutoRepository;
     @Transactional
     public Produto salvar(Produto produto,Long id) {
-        if(produto.getValorUnitario() < 100) {
+        if(produto.getValorUnitario() < 10) {
             throw new ProdutoException(ProdutoException.MSG_VALOR_MINIMO);
         }
         produto.setHabilitado(true);

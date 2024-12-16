@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ifpe.oxefood.modelo.acesso.Perfil;
+import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.cliente.endereco.Endereco;
 import br.com.ifpe.oxefood.modelo.cliente.endereco.EnderecoRepository;
@@ -17,15 +19,20 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
     @Autowired
     private EnderecoRepository enderecoRepository;
-
+    @Autowired
+    private PerfilRepository perfilRepository;
     @Autowired
     private UsuarioService usuarioService;
+
     @Transactional
     public Cliente salvar(Cliente cliente) {
 
         usuarioService.save(cliente.getUsuario());
 
-        cliente.setHabilitado(Boolean.TRUE);
+        for (Perfil perfil : cliente.getUsuario().getRoles()) {
+            perfil.setHabilitado(Boolean.TRUE);
+            perfilRepository.save(perfil);
+        }
 
         Cliente clienteSalvo = clienteRepository.save(cliente);
         // emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);

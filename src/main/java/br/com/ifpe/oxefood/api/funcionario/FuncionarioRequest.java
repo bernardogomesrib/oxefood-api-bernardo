@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.funcionario.Funcionario;
 import br.com.ifpe.oxefood.modelo.funcionario.TipoFuncionario;
 import jakarta.persistence.EnumType;
@@ -20,6 +21,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FuncionarioRequest {
+
+    @NotBlank
+    private String email;
+
+    @NotBlank
+    private String password;
+
 
     @NotNull
     @Enumerated(EnumType.STRING)
@@ -58,6 +66,7 @@ public class FuncionarioRequest {
     public Funcionario build() {
 
         return Funcionario.builder()
+                .usuario(buildUsuario())
                 .tipo(tipo)
                 .nome(nome)
                 .cpf(cpf)
@@ -73,6 +82,13 @@ public class FuncionarioRequest {
                 .enderecoCep(enderecoCep)
                 .enderecoUf(enderecoUf)
                 .enderecoComplemento(enderecoComplemento)
+                .build();
+    }
+      public Usuario buildUsuario() {
+
+        return Usuario.builder()
+                .username(email)
+                .password(password)
                 .build();
     }
 

@@ -8,7 +8,7 @@ public enum TipoFuncionario {
             "Administrador"),
     OPERADOR(
             "Operador");
-
+    
     private String tipo;
 
     private TipoFuncionario(String tipo) {
