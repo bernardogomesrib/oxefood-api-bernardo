@@ -11,6 +11,7 @@ import br.com.ifpe.oxefood.modelo.acesso.PerfilRepository;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.cliente.endereco.Endereco;
 import br.com.ifpe.oxefood.modelo.cliente.endereco.EnderecoRepository;
+import br.com.ifpe.oxefood.modelo.mensagens.EmailService;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -24,6 +25,9 @@ public class ClienteService {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private EmailService emailService;
+
     @Transactional
     public Cliente salvar(Cliente cliente) {
         cliente.setHabilitado(true);
@@ -35,7 +39,7 @@ public class ClienteService {
         }
 
         Cliente clienteSalvo = clienteRepository.save(cliente);
-        // emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+        emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
 
         return clienteSalvo;
     }
@@ -120,7 +124,7 @@ public class ClienteService {
         clienteRepository.save(cliente);
     }
 
-    public List<Cliente> filtrarPorNomeOuCpf(String nome, String cpf){
+    public List<Cliente> filtrarPorNomeOuCpf(String nome, String cpf) {
         return clienteRepository.findByNomeOrCpf(nome, cpf);
     }
 }

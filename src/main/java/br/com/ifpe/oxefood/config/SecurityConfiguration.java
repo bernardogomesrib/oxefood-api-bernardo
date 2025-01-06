@@ -59,7 +59,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/cliente", "/api/auth").permitAll()
                         .requestMatchers(HttpMethod.GET,
                                 "/api-docs/*",
-                                "/swagger-ui/*")
+                                "/swagger-ui/*","/api-docs*")
                         .permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement((session) -> session

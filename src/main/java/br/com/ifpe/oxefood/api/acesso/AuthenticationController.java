@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.ifpe.oxefood.modelo.seguranca.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/auth")
-
+@Tag(name = "Autenticação", description = "Rota de autenticação")
 public class AuthenticationController {
 
     private final JwtService jwtService;
@@ -25,7 +27,7 @@ public class AuthenticationController {
         this.jwtService = jwtService;
         this.usuarioService = usuarioService;
     }
-
+    @Operation(summary = "Autenticação de usuário", description = "Realiza a autenticação de um usuário")
     @PostMapping
     public Map<Object, Object> signin(@RequestBody AuthenticationRequest data) {
     
